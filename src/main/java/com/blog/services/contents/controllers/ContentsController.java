@@ -1,6 +1,7 @@
 package com.blog.services.contents.controllers;
 
 import com.blog.services.common.Result;
+import com.blog.services.contents.models.ContentType;
 import com.blog.services.contents.models.dto.ContentDTO;
 import com.blog.services.contents.models.vo.CreateContentVO;
 import com.blog.services.contents.services.ContentService;
@@ -14,7 +15,7 @@ import java.util.List;
  * 内容管理控制器（博客文章）
  *
  * RESTful API设计：
- * GET    /api/contents          查询内容列表
+ * GET    /api/contents          查询内容列表（可选 ?type= 按类型筛选：1-文章，2-投票，3-提问）
  * GET    /api/contents/{id}     查询单个内容
  * POST   /api/contents          创建内容
  * PUT    /api/contents/{id}     更新内容
@@ -29,10 +30,16 @@ public class ContentsController {
 
     /**
      * 查询内容列表
+     *
+     * @param type 内容类型筛选（1-文章，2-投票，3-提问）；不传则查询全部
      */
     @GetMapping
-    public Result<List<ContentDTO>> listContents() {
-        List<ContentDTO> contents = contentService.listContents();
+    public Result<List<ContentDTO>> listContents(
+            @RequestParam(value = "type", required = false) Integer type) {
+        if (type != null && !ContentType.isValid(type)) {
+            return Result.badRequest("内容类型无效，可选值：1-文章，2-投票，3-提问");
+        }
+        List<ContentDTO> contents = contentService.listContents(type);
         return Result.success(contents);
     }
 
@@ -58,6 +65,9 @@ public class ContentsController {
     public Result<ContentDTO> createContent(@RequestBody CreateContentVO vo) {
         if (vo == null) {
             return Result.badRequest("请求体不能为空");
+        }
+        if (vo.getType() != null && !ContentType.isValid(vo.getType())) {
+            return Result.badRequest("内容类型无效，可选值：1-文章，2-投票，3-提问");
         }
         if (StringUtils.isBlank(vo.getTitle())) {
             return Result.badRequest("标题不能为空");
@@ -88,6 +98,9 @@ public class ContentsController {
         }
         if (vo == null) {
             return Result.badRequest("请求体不能为空");
+        }
+        if (vo.getType() != null && !ContentType.isValid(vo.getType())) {
+            return Result.badRequest("内容类型无效，可选值：1-文章，2-投票，3-提问");
         }
         try {
             ContentDTO content = contentService.updateContent(id, vo);

@@ -22,6 +22,31 @@ CREATE TABLE `files` (
     KEY `idx_create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文件元信息表';
 
+-- 博客内容表
+DROP TABLE IF EXISTS `contents`;
+CREATE TABLE `contents` (
+    `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT '内容ID',
+    `type`          TINYINT      NOT NULL DEFAULT 1 COMMENT '内容类型（1-文章，2-投票，3-提问）',
+    `title`         VARCHAR(255) NOT NULL COMMENT '标题',
+    `summary`       VARCHAR(512) DEFAULT NULL COMMENT '摘要',
+    `content`       MEDIUMTEXT   NOT NULL COMMENT '正文',
+    `author_id`     BIGINT       NOT NULL COMMENT '作者ID',
+    `category`      VARCHAR(64)  DEFAULT NULL COMMENT '分类',
+    `tags`          VARCHAR(255) DEFAULT NULL COMMENT '标签（逗号分隔）',
+    `cover_image`   VARCHAR(512) DEFAULT NULL COMMENT '封面图片URL',
+    `status`        TINYINT      NOT NULL DEFAULT 1 COMMENT '状态（1-已发布，0-草稿）',
+    `view_count`    BIGINT       NOT NULL DEFAULT 0 COMMENT '浏览量',
+    `like_count`    BIGINT       NOT NULL DEFAULT 0 COMMENT '点赞数',
+    `comment_count` BIGINT       NOT NULL DEFAULT 0 COMMENT '评论数',
+    `create_time`   BIGINT       NOT NULL COMMENT '创建时间（毫秒时间戳）',
+    `update_time`   BIGINT       NOT NULL COMMENT '更新时间（毫秒时间戳）',
+    PRIMARY KEY (`id`),
+    KEY `idx_type` (`type`),
+    KEY `idx_author` (`author_id`),
+    KEY `idx_category` (`category`),
+    KEY `idx_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='博客内容表';
+
 -- 内容评论表
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (

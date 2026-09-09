@@ -10,6 +10,8 @@ public class ContentDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    /** 内容类型（1-文章，2-投票，3-提问） */
+    private Integer type;
     private String title;
     private String summary;
     private String content;
@@ -30,6 +32,14 @@ public class ContentDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getTitle() {

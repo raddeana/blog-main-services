@@ -21,9 +21,11 @@ public interface ContentService {
     ContentDTO getContentById(Long id);
 
     /**
-     * 查询所有内容
+     * 查询内容列表
+     *
+     * @param type 内容类型（1-文章，2-投票，3-提问）；传null表示查询全部类型
      */
-    List<ContentDTO> listContents();
+    List<ContentDTO> listContents(Integer type);
 
     /**
      * 更新内容

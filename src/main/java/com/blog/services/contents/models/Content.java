@@ -1,15 +1,24 @@
 package com.blog.services.contents.models;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 
 /**
  * 内容实体类（博客文章）
  */
+@TableName("contents")
 public class Content implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /** 内容ID */
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    /** 内容类型（1-文章，2-投票，3-提问） */
+    private Integer type;
     private String title;
     private String summary;
     private String content;
@@ -30,6 +39,14 @@ public class Content implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getTitle() {
