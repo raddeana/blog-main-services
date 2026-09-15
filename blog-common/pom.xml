@@ -13,5 +13,27 @@
     <artifactId>blog-common</artifactId>
     <packaging>jar</packaging>
     <name>blog-common</name>
-    <description>公共模块：统一响应封装、通用工具类</description>
+    <description>公共模块：统一响应封装、Feign Client 接口、通用 DTO/VO</description>
+
+    <dependencies>
+        <!-- Spring Cloud OpenFeign（仅声明接口，不引入完整 Spring Boot） -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- OkHttp：Feign 底层 HTTP 客户端 -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+        <!-- Spring Web 注解（@RequestMapping 等，由 Spring Cloud 管理） -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>
